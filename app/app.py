@@ -36,4 +36,4 @@ def jellyfin_notifier():
 app.register_blueprint(notify_bp)
 
 if __name__ == "__main__":
-    app.run(debug=settings.DEBUG)
+    app.run(debug=settings.DEBUG, host="0.0.0.0", port=settings.PORT)

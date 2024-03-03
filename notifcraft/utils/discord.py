@@ -1,7 +1,7 @@
 import json
 import requests
 
-from app.settings import env
+from notifcraft.settings import env
 
 
 class DiscordMessageBuilder:
@@ -11,5 +11,4 @@ class DiscordMessageBuilder:
 
     def send(self):
         response = requests.post(self._wehbook_url, json=json.loads(self._message))
-        print(response.content)
         response.raise_for_status()

@@ -9,6 +9,7 @@ env = Environment(loader=PackageLoader(__name__))
 class Settings(BaseSettings):
     DEBUG: bool
     LOG_FILE: str = os.path.join(os.path.dirname(__file__), "../logs/flask.log")
+    PORT: int = 5000
 
 
 class SettingsBase(BaseSettings):

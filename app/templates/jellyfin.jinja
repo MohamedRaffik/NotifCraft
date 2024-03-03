@@ -1,0 +1,73 @@
+{
+    "username": "Jellyfin Bot",
+    "avatar_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png",
+    "embeds": [
+        {
+            {% if context['ItemType'] == "Episode" %}
+            "title": "{{ context['SeriesName'] }} S{{ context['SeasonNumber00'] }}E{{ context['EpisodeNumber00'] }}",
+            {% elif context['ItemType'] == "Movie" %}
+            "title": "{{ context['Name'] }}",
+            {% endif %}
+
+            "author": {
+                {% if context['ItemType'] == "Episode" %}
+                "name": "New Episode Added",
+                {% elif context['ItemType'] == "Movie" %}
+                "name": "New Movie Added",
+                {% endif %}
+
+                "icon_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png"
+            },
+
+            "url": "{{ context['ServerUrl'] }}/web/index.html#!/details?id={{ context['ItemId'] }}&serverId={{ context['ServerId'] }}",
+
+            "image": {
+                "url": "{{ context['ServerUrl'] }}/Items/{{ context['ItemId'] }}/Images/Primary"
+            },
+
+            "color": 11164867,
+
+            "fields": [
+                {% if context['Overview'] %}
+                {
+                    "name": "Overview",
+                    "value": "{{ context['Overview'] }}"
+                },
+                {% endif %}
+
+                {% if context['ItemType'] == "Episode" %}
+                {
+                    "name": "Episode",
+                    "value": "{{ context['Name'] }}"
+                },
+                {% endif %}
+
+                {
+                    "name": "Year",
+                    "value": "{{ context['Year'] }}",
+                    "inline": "true"
+                },
+                {
+                    "name": "Runtime",
+                    "value": "{{ context['RunTime'] }}",
+                    "inline": "true"
+                },
+                {
+                    "name": "Quality",
+                    "value": "{{ context['Video_0_Title'] }}",
+                    "inline": "true"
+                },
+                {
+                    "name": "Subtitles",
+                    "value": "```{{ context['Subtitles'] }}```",
+                    "inline": "true"
+                },
+                {
+                    "name": "Audio",
+                    "value": "```{{ context['Audio'] }}```",
+                    "inline": "true"
+                }
+            ]
+        }
+    ]
+}

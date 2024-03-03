@@ -7,8 +7,8 @@ ARG PUID=1000
 ARG GUID=1000
 
 RUN pip install poetry
-RUN groupadd -g ${GUID} -o notifcraft
-RUN useradd -u ${PUID} -g ${GUID} -o notifcraft
+RUN addgroup --gid ${GUID} -S notifcraft && \
+    adduser --uid ${PUID} --ingroup notifcraft -S notifcraft
 USER notifcraft
 WORKDIR /app
 COPY . .

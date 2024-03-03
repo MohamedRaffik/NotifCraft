@@ -20,4 +20,3 @@ class JellyfinSettings(SettingsBase):
     model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
 
     URL: str
-    API_KEY: str

@@ -1,9 +1,9 @@
 from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
-from app.discord import DiscordMessageBuilder
-from app.settings import JellyfinSettings, Settings
-from app.utils import create_jellyfin_message_context
+from notifcraft.utils.discord import DiscordMessageBuilder
+from notifcraft.settings import JellyfinSettings, Settings
+from notifcraft.utils.utils import create_jellyfin_message_context
 
 app = Flask(__name__)
 

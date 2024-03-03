@@ -6,11 +6,13 @@ ARG JELLYFIN_URL
 ARG PUID=1000
 ARG GUID=1000
 
-RUN pip install poetry
 RUN addgroup --gid ${GUID} -S notifcraft && \
     adduser --uid ${PUID} --ingroup notifcraft -S notifcraft
 USER notifcraft
+ENV PATH="${PATH}:/home/notifcraft/.local/bin"
+
+RUN pip install --user poetry
 WORKDIR /app
 COPY . .
 RUN poetry install
-ENTRYPOINT [ "/bin/bash", "-c", "poetry run python -m app.app" ]
+ENTRYPOINT [ "poetry", "run", "python", "-m", "app.app" ]

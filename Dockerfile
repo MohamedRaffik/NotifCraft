@@ -15,4 +15,4 @@ RUN pip install --user poetry
 WORKDIR /app
 COPY . .
 RUN poetry install
-ENTRYPOINT [ "poetry", "run", "python", "-m", "app.app" ]
+ENTRYPOINT [ "poetry", "run", "python", "-m", "notifcraft.app" ]

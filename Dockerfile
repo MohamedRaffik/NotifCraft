@@ -13,4 +13,4 @@ USER notifcraft
 WORKDIR /app
 COPY . .
 RUN poetry install
-ENTRYPOINT [ "poetry run python -m app.app" ]
+ENTRYPOINT [ "/bin/bash", "-c", "poetry run python -m app.app" ]

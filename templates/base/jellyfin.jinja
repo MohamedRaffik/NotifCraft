@@ -1,0 +1,73 @@
+{
+    "username": "Jellyfin Bot",
+    "avatar_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png",
+    "embeds": [
+        {
+            {% if ItemType == "Episode" %}
+            "title": "{{ SeriesName }} S{{ SeasonNumber00 }}E{{ EpisodeNumber00 }}",
+            {% elif ItemType == "Movie" %}
+            "title": "{{ Name }}",
+            {% endif %}
+
+            "author": {
+                {% if ItemType == "Episode" %}
+                "name": "New Episode Added",
+                {% elif ItemType == "Movie" %}
+                "name": "New Movie Added",
+                {% endif %}
+
+                "icon_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png"
+            },
+
+            "url": "{{ ServerUrl }}/web/index.html#!/details?id={{ ItemId }}&serverId={{ ServerId }}",
+
+            "image": {
+                "url": "{{ ServerUrl }}/Items/{{ ItemId }}/Images/Primary"
+            },
+
+            "color": 11164867,
+
+            "fields": [
+                {% if Overview %}
+                {
+                    "name": "Overview",
+                    "value": "{{ Overview }}"
+                },
+                {% endif %}
+
+                {% if ItemType == "Episode" %}
+                {
+                    "name": "Episode",
+                    "value": "{{ Name }}"
+                },
+                {% endif %}
+
+                {
+                    "name": "Year",
+                    "value": "{{ Year }}",
+                    "inline": "true"
+                },
+                {
+                    "name": "Runtime",
+                    "value": "{{ RunTime }}",
+                    "inline": "true"
+                },
+                {
+                    "name": "Quality",
+                    "value": "{{ Video_0_Title }}",
+                    "inline": "true"
+                },
+                {
+                    "name": "Subtitles",
+                    "value": "```{{ Subtitles }}```",
+                    "inline": "true"
+                },
+                {
+                    "name": "Audio",
+                    "value": "```{{ Audio }}```",
+                    "inline": "true"
+                }
+            ]
+        }
+    ]
+}

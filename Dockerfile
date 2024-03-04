@@ -14,7 +14,10 @@ ENV PATH="${PATH}:/home/notifcraft/.local/bin"
 RUN pip install --user poetry
 
 WORKDIR /app
-COPY --chown=${PUID}:${PGID} . .
+COPY --chown=${PUID}:${PGID} pyproject.toml pyproject.toml
+COPY --chown=${PUID}:${PGID} poetry.lock poetry.lock
 RUN poetry config virtualenvs.in-project true
-RUN poetry install
-ENTRYPOINT [ "poetry", "run", "gunicorn", "-w", "4", "--bind", "0.0.0.0:80", "notifcraft.app:app" ]
+RUN poetry install --no-root
+COPY --chown=${PUID}:${PGID} . .
+RUN chmod +x init.sh
+ENTRYPOINT [ "./init.sh" ]

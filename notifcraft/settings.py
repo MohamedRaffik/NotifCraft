@@ -20,3 +20,4 @@ class JellyfinSettings(SettingsBase):
     model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
 
     URL: str
+    TEMPLATE: str = "jellyfin.jinja"

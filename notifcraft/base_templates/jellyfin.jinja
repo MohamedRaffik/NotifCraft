@@ -3,68 +3,68 @@
     "avatar_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png",
     "embeds": [
         {
-            {% if context['ItemType'] == "Episode" %}
-            "title": "{{ context['SeriesName'] }} S{{ context['SeasonNumber00'] }}E{{ context['EpisodeNumber00'] }}",
-            {% elif context['ItemType'] == "Movie" %}
-            "title": "{{ context['Name'] }}",
+            {% if ItemType == "Episode" %}
+            "title": "{{ SeriesName }} S{{ SeasonNumber00 }}E{{ EpisodeNumber00 }}",
+            {% elif ItemType == "Movie" %}
+            "title": "{{ Name }}",
             {% endif %}
 
             "author": {
-                {% if context['ItemType'] == "Episode" %}
+                {% if ItemType == "Episode" %}
                 "name": "New Episode Added",
-                {% elif context['ItemType'] == "Movie" %}
+                {% elif ItemType == "Movie" %}
                 "name": "New Movie Added",
                 {% endif %}
 
                 "icon_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png"
             },
 
-            "url": "{{ context['ServerUrl'] }}/web/index.html#!/details?id={{ context['ItemId'] }}&serverId={{ context['ServerId'] }}",
+            "url": "{{ ServerUrl }}/web/index.html#!/details?id={{ ItemId }}&serverId={{ ServerId }}",
 
             "image": {
-                "url": "{{ context['ServerUrl'] }}/Items/{{ context['ItemId'] }}/Images/Primary"
+                "url": "{{ ServerUrl }}/Items/{{ ItemId }}/Images/Primary"
             },
 
             "color": 11164867,
 
             "fields": [
-                {% if context['Overview'] %}
+                {% if Overview %}
                 {
                     "name": "Overview",
-                    "value": "{{ context['Overview'] }}"
+                    "value": "{{ Overview }}"
                 },
                 {% endif %}
 
-                {% if context['ItemType'] == "Episode" %}
+                {% if ItemType == "Episode" %}
                 {
                     "name": "Episode",
-                    "value": "{{ context['Name'] }}"
+                    "value": "{{ Name }}"
                 },
                 {% endif %}
 
                 {
                     "name": "Year",
-                    "value": "{{ context['Year'] }}",
+                    "value": "{{ Year }}",
                     "inline": "true"
                 },
                 {
                     "name": "Runtime",
-                    "value": "{{ context['RunTime'] }}",
+                    "value": "{{ RunTime }}",
                     "inline": "true"
                 },
                 {
                     "name": "Quality",
-                    "value": "{{ context['Video_0_Title'] }}",
+                    "value": "{{ Video_0_Title }}",
                     "inline": "true"
                 },
                 {
                     "name": "Subtitles",
-                    "value": "```{{ context['Subtitles'] }}```",
+                    "value": "```{{ Subtitles }}```",
                     "inline": "true"
                 },
                 {
                     "name": "Audio",
-                    "value": "```{{ context['Audio'] }}```",
+                    "value": "```{{ Audio }}```",
                     "inline": "true"
                 }
             ]

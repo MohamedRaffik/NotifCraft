@@ -6,7 +6,7 @@ from notifcraft.settings import env
 
 class DiscordMessageBuilder:
     def __init__(self, webhook_url: str, context: dict, template: str):
-        self._message = env.get_template(template).render(context=context)
+        self._message = env.get_template(template).render(context)
         self._wehbook_url = webhook_url
 
     def send(self):

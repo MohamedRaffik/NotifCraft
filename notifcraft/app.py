@@ -1,8 +1,8 @@
 from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
-from notifcraft.utils.discord import DiscordMessageBuilder
 from notifcraft.settings import JellyfinSettings, Settings
+from notifcraft.utils.discord import DiscordMessageBuilder
 from notifcraft.utils.utils import create_jellyfin_message_context
 
 app = Flask(__name__)
@@ -36,4 +36,5 @@ def jellyfin_notifier():
 app.register_blueprint(notify_bp)
 
 if __name__ == "__main__":
+    print(settings)
     app.run(debug=settings.DEBUG, host="0.0.0.0", port=settings.PORT)

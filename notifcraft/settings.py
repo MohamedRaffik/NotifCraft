@@ -6,7 +6,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 env = Environment(
     loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), "../templates"))
 )
-print(env.list_templates())
 
 
 class Settings(BaseSettings):
@@ -23,4 +22,4 @@ class JellyfinSettings(SettingsBase):
     model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
 
     URL: str
-    TEMPLATE: str = "jellyfin.jinja"
+    TEMPLATE: str = "base/jellyfin.jinja"

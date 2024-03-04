@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if [[ ! -d notifcraft/templates ]]; then
-    mkdir notifcraft/templates
+if [[ ! -d templates ]]; then
+    mkdir templates
 fi
 
-cp -r notifcraft/base_templates notifcraft/templates
+rsync --recursive --ignore-existing base_templates templates/base
 
 poetry run gunicorn -w 4 --bind 0.0.0.0:80 notifcraft.app:app

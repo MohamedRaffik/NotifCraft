@@ -16,12 +16,12 @@ settings = Settings()
 @notify_bp.post("/jellyfin")
 def jellyfin_notifier():
     try:
-        settings = JellyfinSettings()
+        jellyfin_settings = JellyfinSettings()
         context = create_jellyfin_message_context(request.json)
         builder = DiscordMessageBuilder(
-            webhook_url=settings.DISCORD_WEBHOOK_URL,
+            webhook_url=jellyfin_settings.DISCORD_WEBHOOK_URL,
             context=context,
-            template="jellyfin.jinja",
+            template=jellyfin_settings.TEMPLATE,
         )
         builder.send()
         return Response(response="Message sent.", status=200)
@@ -36,5 +36,4 @@ def jellyfin_notifier():
 app.register_blueprint(notify_bp)
 
 if __name__ == "__main__":
-    print(settings)
     app.run(debug=settings.DEBUG, host="0.0.0.0", port=settings.PORT)

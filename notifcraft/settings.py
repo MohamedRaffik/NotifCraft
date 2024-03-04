@@ -9,7 +9,6 @@ env = Environment(
 
 
 class Settings(BaseSettings):
-    DEBUG: bool = False
     LOG_FILE: str = os.path.join(os.path.dirname(__file__), "../logs/flask.log")
     PORT: int = 5000
 

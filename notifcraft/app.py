@@ -26,14 +26,14 @@ def jellyfin_notifier():
         builder.send()
         return Response(response="Message sent.", status=200)
     except ValidationError as e:
-        app.logger.info(f"Jellyfin Settings Not Configured: {e.json()}")
+        app.logger.exception(f"Jellyfin Settings Not Configured: {e.json()}")
         return Response(response=e.json(), status=400)
     except Exception as e:
-        app.logger.info(e)
+        app.logger.exception(e)
         return Response(response="Failed to send message.", status=400)
 
 
 app.register_blueprint(notify_bp)
 
 if __name__ == "__main__":
-    app.run(debug=settings.DEBUG, host="0.0.0.0", port=settings.PORT)
+    app.run(debug=True, host="0.0.0.0", port=settings.PORT)

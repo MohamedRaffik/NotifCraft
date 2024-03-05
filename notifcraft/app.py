@@ -17,11 +17,16 @@ def notifier(Builder: DiscordMessageBuilder):
         builder.send()
         return Response(response="Message sent.", status=200)
     except ValidationError as e:
-        message = f"{type(Builder).__name__} Settings Not Configured: {e.json()}"
-        app.logger.exception(message)
-        return Response(message, status=400)
+        message = f"{type(Builder).__name__} Settings Not Configured"
+        app.logger.error(message)
+        app.logger.error(e.json())
+        return Response(
+            {"message": message, "errors": e.json()},
+            status=400,
+        )
     except Exception as e:
-        app.logger.exception(e)
+        app.logger.error(e)
+        app.logger.debug(request.json)
         return Response(response="Failed to send message.", status=400)
 
 

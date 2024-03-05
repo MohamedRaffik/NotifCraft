@@ -17,6 +17,8 @@ class BazarrDiscordMessageBuilder(DiscordMessageBuilder):
         super().__init__(settings.DISCORD_WEBHOOK_URL, context, settings.TEMPLATE)
 
     def _build_context(self, context: dict):
-        content = context.get("body")
-        media, message = content.split(":")
-        return {"media": media, "message": message}
+        content = context.get("message")
+        if ":" in content:
+            media, message = content.split(":")
+            return {"media": media.strip(), "message": message.strip()}
+        return {"media": context.get("title"), "message": context.get("message")}

@@ -2,6 +2,7 @@ from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
 from notifcraft.settings import settings
+from notifcraft.services.bazarr import BazarrDiscordMessageBuilder
 from notifcraft.services.jellyfin import JellyfinDiscordMessageBuilder
 from notifcraft.utils.discord import DiscordMessageBuilder
 
@@ -32,7 +33,7 @@ def jellyfin_notifier():
 
 @notify_bp.post("/bazarr")
 def bazarr_notifier():
-    pass
+    return notifier(BazarrDiscordMessageBuilder)
 
 
 app.register_blueprint(notify_bp)

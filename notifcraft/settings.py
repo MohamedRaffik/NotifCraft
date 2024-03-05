@@ -15,10 +15,3 @@ class Settings(BaseSettings):
 
 class SettingsBase(BaseSettings):
     DISCORD_WEBHOOK_URL: str
-
-
-class JellyfinSettings(SettingsBase):
-    model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
-
-    URL: str
-    TEMPLATE: str = "base/jellyfin.jinja"

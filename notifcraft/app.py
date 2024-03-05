@@ -1,7 +1,7 @@
 from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
-from notifcraft.settings import Settings
+from notifcraft.settings import settings
 from notifcraft.services.jellyfin import JellyfinDiscordMessageBuilder
 from notifcraft.utils.discord import DiscordMessageBuilder
 
@@ -38,5 +38,4 @@ def bazarr_notifier():
 app.register_blueprint(notify_bp)
 
 if __name__ == "__main__":
-    settings = Settings()
-    app.run(debug=True, host="0.0.0.0", port=settings.PORT)
+    app.run(debug=settings.DEBUG, host="0.0.0.0", port=settings.PORT)

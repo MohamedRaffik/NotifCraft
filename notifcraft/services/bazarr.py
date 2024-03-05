@@ -5,10 +5,10 @@ from notifcraft.settings import SettingsBase
 
 
 class BazarrSettings(SettingsBase):
-    model_config = SettingsConfigDict(env_prefix="BAZARR")
+    model_config = SettingsConfigDict(env_prefix="BAZARR_")
 
     URL: str
-    TEMPLATE: str = "base/bazarr.jinja"
+    TEMPLATE: str = "bazarr.jinja"
 
 
 class BazarrDiscordMessageBuilder(DiscordMessageBuilder):
@@ -19,4 +19,4 @@ class BazarrDiscordMessageBuilder(DiscordMessageBuilder):
     def _build_context(self, context: dict):
         content = context.get("body")
         media, message = content.split(":")
-        return {media, message}
+        return {"media": media, "message": message}

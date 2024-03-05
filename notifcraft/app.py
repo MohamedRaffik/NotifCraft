@@ -2,6 +2,7 @@ from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
 from notifcraft.settings import settings
+from notifcraft.services.bazarr import BazarrDiscordMessageBuilder
 from notifcraft.services.jellyfin import JellyfinDiscordMessageBuilder
 from notifcraft.utils.discord import DiscordMessageBuilder
 
@@ -16,10 +17,9 @@ def notifier(Builder: DiscordMessageBuilder):
         builder.send()
         return Response(response="Message sent.", status=200)
     except ValidationError as e:
-        app.logger.exception(
-            f"{type(Builder).__name__} Settings Not Configured: {e.json()}"
-        )
-        return Response(response=e.json(), status=400)
+        message = f"{type(Builder).__name__} Settings Not Configured: {e.json()}"
+        app.logger.exception(message)
+        return Response(message, status=400)
     except Exception as e:
         app.logger.exception(e)
         return Response(response="Failed to send message.", status=400)
@@ -32,7 +32,7 @@ def jellyfin_notifier():
 
 @notify_bp.post("/bazarr")
 def bazarr_notifier():
-    pass
+    return notifier(BazarrDiscordMessageBuilder)
 
 
 app.register_blueprint(notify_bp)

@@ -2,12 +2,17 @@ import json
 import requests
 
 from abc import ABC, abstractmethod
-from notifcraft.settings import env, JellyfinSettings
+from jinja2 import TemplateNotFound
+from notifcraft.settings import templates, base_templates
 
 
 class DiscordMessageBuilder(ABC):
     def __init__(self, webhook_url: str, context: dict, template: str):
-        self._message = env.get_template(template).render(self.build_context(context))
+        try:
+            template = templates.get_template(template)
+        except TemplateNotFound:
+            template = base_templates.get_template(template)
+        self._message = template.render(self._build_context(context))
         self._wehbook_url = webhook_url
 
     def send(self):

@@ -8,7 +8,7 @@ class JellyfinSettings(SettingsBase):
     model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
 
     URL: str
-    TEMPLATE: str = "base/jellyfin.jinja"
+    TEMPLATE: str = "jellyfin.jinja"
 
 
 class JellyfinDiscordMessageBuilder(DiscordMessageBuilder):

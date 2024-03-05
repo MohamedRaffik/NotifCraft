@@ -12,12 +12,12 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-env = Environment(
+templates = Environment(
+    loader=FileSystemLoader(os.path.join(os.path.dirname(__file__), "../templates"))
+)
+base_templates = Environment(
     loader=FileSystemLoader(
-        os.path.join(
-            os.path.dirname(__file__),
-            "../base_templates" if settings.DEBUG else "../templates",
-        )
+        os.path.join(os.path.dirname(__file__), "../base_templates")
     )
 )
 

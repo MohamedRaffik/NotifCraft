@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
@@ -7,6 +8,8 @@ from notifcraft.services.jellyfin import JellyfinDiscordMessageBuilder
 from notifcraft.utils.discord import DiscordMessageBuilder
 
 app = Flask(__name__)
+
+app.logger.setLevel(logging.DEBUG if settings.DEBUG else logging.INFO)
 
 notify_bp = Blueprint("notify", __name__, url_prefix="/notify")
 

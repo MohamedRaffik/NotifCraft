@@ -1,0 +1,16 @@
+{
+    "username": "qBitManage Bot",
+    "avatar_url": "https://raw.githubusercontent.com/StuffAnThings/qbit_manage/master/qbm_logo.png",
+    "embeds": [
+        {
+            {% if message %}
+            "description": "```{{ message }}```",
+            {% endif %}
+
+            "author": {
+                "name": "{{ title }}",
+                "icon_url": "https://raw.githubusercontent.com/StuffAnThings/qbit_manage/master/qbm_logo.png"
+            }
+        }
+    ]
+}

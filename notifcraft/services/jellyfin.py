@@ -1,17 +1,16 @@
 from pydantic_settings import SettingsConfigDict
 
-from notifcraft.utils.discord import DiscordMessageBuilder
+from notifcraft.utils.discord import BaseDiscordMessageBuilder
 from notifcraft.settings import SettingsBase
 
 
 class JellyfinSettings(SettingsBase):
     model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
 
-    URL: str
     TEMPLATE: str = "jellyfin.jinja"
 
 
-class JellyfinDiscordMessageBuilder(DiscordMessageBuilder):
+class DiscordMessageBuilder(BaseDiscordMessageBuilder):
     def __init__(self, context: dict):
         settings = JellyfinSettings()
         super().__init__(settings.DISCORD_WEBHOOK_URL, context, settings.TEMPLATE)

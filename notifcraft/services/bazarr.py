@@ -1,17 +1,16 @@
 from pydantic_settings import SettingsConfigDict
 
-from notifcraft.utils.discord import DiscordMessageBuilder
+from notifcraft.utils.discord import BaseDiscordMessageBuilder
 from notifcraft.settings import SettingsBase
 
 
 class BazarrSettings(SettingsBase):
     model_config = SettingsConfigDict(env_prefix="BAZARR_")
 
-    URL: str
     TEMPLATE: str = "bazarr.jinja"
 
 
-class BazarrDiscordMessageBuilder(DiscordMessageBuilder):
+class DiscordMessageBuilder(BaseDiscordMessageBuilder):
     def __init__(self, context: dict):
         settings = BazarrSettings()
         super().__init__(settings.DISCORD_WEBHOOK_URL, context, settings.TEMPLATE)

@@ -17,6 +17,7 @@ def notifier(Builder: BaseDiscordMessageBuilder):
     try:
         builder = Builder(context=request.json)
         builder.send()
+        app.logger.debug(request.json)
         return Response(response="Message sent.", status=200)
     except ValidationError as e:
         message = f"{type(Builder).__name__} Settings Not Configured"

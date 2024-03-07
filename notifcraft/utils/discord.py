@@ -21,9 +21,7 @@ class BaseDiscordMessageBuilder(ABC):
             session = requests.Session()
             session.mount(
                 "https://",
-                HTTPAdapter(
-                    max_retries=Retry(5, backoff_factor=0.5, status_forcelist=[429])
-                ),
+                HTTPAdapter(max_retries=Retry(5, backoff_factor=0.1)),
             )
             response = session.post(
                 self._wehbook_url,

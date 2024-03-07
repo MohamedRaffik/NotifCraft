@@ -1,10 +1,10 @@
 from pydantic_settings import SettingsConfigDict
 
 from notifcraft.utils.discord import BaseDiscordMessageBuilder
-from notifcraft.settings import SettingsBase
+from notifcraft.settings import BaseServiceSettings
 
 
-class BazarrSettings(SettingsBase):
+class BazarrSettings(BaseServiceSettings):
     model_config = SettingsConfigDict(env_prefix="BAZARR_")
 
     TEMPLATE: str = "bazarr.jinja"

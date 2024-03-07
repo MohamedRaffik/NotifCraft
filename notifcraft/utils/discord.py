@@ -4,6 +4,7 @@ import requests
 from abc import ABC, abstractmethod
 from jinja2 import TemplateNotFound
 from notifcraft.settings import templates, base_templates
+from requests.adapters import Retry, HTTPAdapter
 
 
 class BaseDiscordMessageBuilder(ABC):
@@ -17,8 +18,16 @@ class BaseDiscordMessageBuilder(ABC):
 
     def send(self):
         if self._message:
-            response = requests.post(
-                self._wehbook_url, json=json.loads(self._message, strict=False)
+            session = requests.Session()
+            session.mount(
+                "https://",
+                HTTPAdapter(
+                    max_retries=Retry(5, backoff_factor=0.5, status_forcelist=[429])
+                ),
+            )
+            response = session.post(
+                self._wehbook_url,
+                json=json.loads(self._message, strict=False),
             )
             response.raise_for_status()
 

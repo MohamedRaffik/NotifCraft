@@ -1,19 +1,20 @@
-from pydantic_settings import SettingsConfigDict
-
+from notifcraft.settings import ServiceSettings
 from notifcraft.utils.discord import BaseDiscordMessageBuilder
-from notifcraft.settings import BaseServiceSettings
 
 
-class QbitManageSettings(BaseServiceSettings):
-    model_config = SettingsConfigDict(env_prefix="QBITMANAGE_")
-
-    TEMPLATE: str = "qbitmanage.jinja"
+class QbitManageSettings(ServiceSettings):
+    QBITMANAGE_DISCORD_WEBHOOK_URL: str
+    QBITMANAGE_TEMPLATE: str = "qbitmanage.jinja"
 
 
 class DiscordMessageBuilder(BaseDiscordMessageBuilder):
     def __init__(self, context: dict):
         settings = QbitManageSettings()
-        super().__init__(settings.DISCORD_WEBHOOK_URL, context, settings.TEMPLATE)
+        super().__init__(
+            settings.QBITMANAGE_DISCORD_WEBHOOK_URL,
+            context,
+            settings.QBITMANAGE_TEMPLATE,
+        )
 
     def _build_context(self, context: dict[str, str]):
         title = context.get("title")

@@ -48,6 +48,14 @@ def qbitmanage_notifier():
     return notifier(qbitmanage.DiscordMessageBuilder)
 
 
+if settings.DEBUG:
+
+    @notify_bp.post("/test")
+    def test_notifier():
+        app.logger.debug(request.json)
+        return Response(status=200)
+
+
 app.register_blueprint(notify_bp)
 
 if __name__ == "__main__":

@@ -1,19 +1,18 @@
-from pydantic_settings import SettingsConfigDict
-
+from notifcraft.settings import ServiceSettings
 from notifcraft.utils.discord import BaseDiscordMessageBuilder
-from notifcraft.settings import BaseServiceSettings
 
 
-class JellyfinSettings(BaseServiceSettings):
-    model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
-
-    TEMPLATE: str = "jellyfin.jinja"
+class JellyfinSettings(ServiceSettings):
+    JELLYFIN_DISCORD_WEBHOOK_URL: str
+    JELLYFIN_TEMPLATE: str = "jellyfin.jinja"
 
 
 class DiscordMessageBuilder(BaseDiscordMessageBuilder):
     def __init__(self, context: dict):
         settings = JellyfinSettings()
-        super().__init__(settings.DISCORD_WEBHOOK_URL, context, settings.TEMPLATE)
+        super().__init__(
+            settings.JELLYFIN_DISCORD_WEBHOOK_URL, context, settings.JELLYFIN_TEMPLATE
+        )
 
     def _build_context(self, context: dict):
         runtime = context.get("RunTime")

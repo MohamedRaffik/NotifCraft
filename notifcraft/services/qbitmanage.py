@@ -1,10 +1,10 @@
 from pydantic_settings import SettingsConfigDict
 
 from notifcraft.utils.discord import BaseDiscordMessageBuilder
-from notifcraft.settings import SettingsBase
+from notifcraft.settings import BaseServiceSettings
 
 
-class QbitManageSettings(SettingsBase):
+class QbitManageSettings(BaseServiceSettings):
     model_config = SettingsConfigDict(env_prefix="QBITMANAGE_")
 
     TEMPLATE: str = "qbitmanage.jinja"

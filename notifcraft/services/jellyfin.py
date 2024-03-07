@@ -1,10 +1,10 @@
 from pydantic_settings import SettingsConfigDict
 
 from notifcraft.utils.discord import BaseDiscordMessageBuilder
-from notifcraft.settings import SettingsBase
+from notifcraft.settings import BaseServiceSettings
 
 
-class JellyfinSettings(SettingsBase):
+class JellyfinSettings(BaseServiceSettings):
     model_config = SettingsConfigDict(env_prefix="JELLYFIN_")
 
     TEMPLATE: str = "jellyfin.jinja"

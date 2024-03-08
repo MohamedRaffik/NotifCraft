@@ -3,7 +3,7 @@ from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
 from notifcraft.settings import settings
-from notifcraft.services import bazarr, jellyfin, qbitmanage, test
+from notifcraft.services import bazarr, jellyfin, qbitmanage, test, watchtower
 from notifcraft.utils.discord import BaseDiscordMessageBuilder
 
 app = Flask(__name__)
@@ -41,6 +41,11 @@ def bazarr_notifier():
 @notify_bp.post("/qbitmanage")
 def qbitmanage_notifier():
     return notifier(qbitmanage.DiscordMessageBuilder)
+
+
+@notify_bp.post("/watchtower")
+def watchtower_notifier():
+    return notifier(watchtower.DiscordMessageBuilder)
 
 
 if settings.DEBUG:

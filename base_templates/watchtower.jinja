@@ -1,0 +1,16 @@
+{
+    "username": "Watchtower Bot",
+    "avatar_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/watchtower.png",
+    "embeds": [
+        {
+            {% if message %}
+            "description": "```{{ message }}```",
+            {% endif %}
+
+            "author": {
+                "name": "{{ title }}",
+                "icon_url": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/watchtower.png"
+            }
+        }
+    ]
+}

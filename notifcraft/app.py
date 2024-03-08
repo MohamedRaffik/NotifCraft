@@ -3,7 +3,7 @@ from flask import Flask, Response, Blueprint, request
 from pydantic import ValidationError
 
 from notifcraft.settings import settings
-from notifcraft.services import bazarr, jellyfin, qbitmanage
+from notifcraft.services import bazarr, jellyfin, qbitmanage, test
 from notifcraft.utils.discord import BaseDiscordMessageBuilder
 
 app = Flask(__name__)
@@ -20,13 +20,8 @@ def notifier(Builder: BaseDiscordMessageBuilder):
         app.logger.debug(request.json)
         return Response(response="Message sent.", status=200)
     except ValidationError as e:
-        message = f"{type(Builder).__name__} Settings Not Configured"
-        app.logger.error(message)
         app.logger.error(e.json())
-        return Response(
-            {"message": message, "errors": e.json()},
-            status=400,
-        )
+        return Response({"errors": e.json()}, status=400)
     except Exception as e:
         app.logger.exception(e)
         app.logger.debug(request.json)
@@ -46,6 +41,27 @@ def bazarr_notifier():
 @notify_bp.post("/qbitmanage")
 def qbitmanage_notifier():
     return notifier(qbitmanage.DiscordMessageBuilder)
+
+
+if settings.DEBUG:
+
+    @notify_bp.post("/test")
+    def test_notifier():
+        app.logger.debug(request.json)
+        try:
+            builder = test.DiscordMessageBuilder(
+                context=request.json, remote_addr=request.remote_addr
+            )
+            builder.send()
+            app.logger.debug(request.json)
+            return Response(response="Message sent.", status=200)
+        except ValidationError as e:
+            app.logger.error(e.json())
+            return Response({"errors": e.json()}, status=400)
+        except Exception as e:
+            app.logger.exception(e)
+            app.logger.debug(request.json)
+            return Response(response="Failed to send message.", status=400)
 
 
 app.register_blueprint(notify_bp)

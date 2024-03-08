@@ -1,7 +1,15 @@
-import json
-import requests
+def build_context(context: dict):
+    content: str = context.get("message")
+    if ":" in content:
+        last_index = 0
+        for i in range(len(content) - 1, -1, -1):
+            if content[i] == ":":
+                last_index = i
+                break
+        media = content[:last_index]
+        message = content[last_index + 1 :]
+        return {"media": media.strip(), "message": message.strip()}
+    return {"media": context.get("title"), "message": context.get("message")}
 
-notify_json = json.load(open("./test_responses/test_movie.json", "r"))
 
-response = requests.post("http://localhost:5000/notify/jellyfin", json=notify_json)
-response.raise_for_status()
+print(build_context({"message": "Aquaman (2023) : English Subtitles DOwnloads"}))

@@ -27,5 +27,5 @@ class DiscordMessageBuilder(BaseDiscordMessageBuilder):
             else:
                 message = None
         elif "orphaned" in title.lower():
-            message = message.replace("\n", "\n\n")
+            message = message.replace("\n", "\n\n").strip()
         return {"title": title, "message": message}
